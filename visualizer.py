@@ -23,9 +23,14 @@ if __name__ == "__main__":
             a = int(input())
             print("Enter Value for b")
             b = int(input())
+
             request = matlab_request.request(matlab_e.callTest, (a,b))
+            print("Press Enter to create blank figure")
+            input()
+            request = (matlab_e.createBlankFigure, None)
             matlab_e.requests.put(request)
             time.sleep(0.2)
+
     except KeyboardInterrupt:
         matlab_e.__del__()
 

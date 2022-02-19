@@ -12,6 +12,7 @@ class matlabWorker:
         self.name = f"Worker{self.id}"
         matlabWorker.staticCounter += 1
         self.matlabEngine = engine
+        self.loopSleepTime = 0.2
         self.exit = threading.Event()
         self.thread = threading.Thread(target=request.command, name=self.name, args=(self, request), )
         self.thread.start()
