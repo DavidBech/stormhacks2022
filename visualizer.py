@@ -25,7 +25,8 @@ if __name__ == "__main__":
             #matlab_e.requests.put(request)
             print("before f transform")
             input()
-            request = matlab_request.request(matlab_e.callFourier, None)
+            func = "cos(2*pi*2*t)"
+            request = matlab_request.request(matlab_e.callFourier, (func))
             matlab_e.requests.put(request)
             print("after f transform")
             input()
