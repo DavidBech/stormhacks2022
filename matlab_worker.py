@@ -7,7 +7,7 @@ Matlab Worker
 
 class matlabWorker:
     staticCounter = 1
-    def __init__(self, engine, command, *args):
+    def __init__(self, engine, command, args):
         self.id = matlabWorker.staticCounter
         self.name = f"Worker{self.id}"
         matlabWorker.staticCounter += 1

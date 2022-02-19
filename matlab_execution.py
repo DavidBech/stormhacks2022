@@ -22,10 +22,8 @@ class matlab_executioner:
         self.thread.start()
     
     def __del__(self):
-        print("in matlab delete")
         self.exit.set()
         self.thread.join()
-        print(f"ending workers {self.workers}")
         for worker in self.workers:
             del worker
 
@@ -33,7 +31,6 @@ class matlab_executioner:
         print("started matlab thread")
         while True:
             if self.exit.is_set():
-                print("Exiting Matlab Executioner")
                 return
             try:
                 request = self.requests.get_nowait()
@@ -48,13 +45,14 @@ class matlab_executioner:
                 pass
 
             time.sleep(0.3)
-            print("time")
 
-    def callTest(self, worker, *args):
-        retVal = worker.matlabEngine.test(2,3)
+    def callTest(self, worker, args):
+        a = args[0]
+        b = args[1]
+        retVal = worker.matlabEngine.test(a, b)
         if worker.exit.is_set():
             return
-        print(retVal)
+        print(f"Test Ouput: {retVal}")
         finished = (worker)
         while True:
             try:

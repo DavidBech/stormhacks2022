@@ -9,9 +9,11 @@ if __name__ == "__main__":
     matlab_e = matlab_execution.matlab_executioner()
     try:
         while True:
-            print("Press Enter to continue")
-            input()
-            request = (matlab_e.callTest, ())
+            print("Enter Value for a")
+            a = int(input())
+            print("Enter Value for b")
+            b = int(input())
+            request = (matlab_e.callTest, (a,b))
             matlab_e.requests.put(request)
             time.sleep(0.2)
     except KeyboardInterrupt:
