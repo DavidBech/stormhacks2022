@@ -7,13 +7,13 @@ Matlab Worker
 
 class matlabWorker:
     staticCounter = 1
-    def __init__(self, engine, command, args):
+    def __init__(self, engine, request):
         self.id = matlabWorker.staticCounter
         self.name = f"Worker{self.id}"
         matlabWorker.staticCounter += 1
         self.matlabEngine = engine
         self.exit = threading.Event()
-        self.thread = threading.Thread(target=command, name=self.name, args=(self, args))
+        self.thread = threading.Thread(target=request.command, name=self.name, args=(self, request), )
         self.thread.start()
 
     def __del__(self):

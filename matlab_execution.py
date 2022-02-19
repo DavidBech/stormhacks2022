@@ -11,11 +11,12 @@ import matlab_worker
 Class For Handling matlab calls
 """
 class matlab_executioner:
-    def __init__(self):
+    def __init__(self, retValQueue):
         self.matlabEngine = matlab.engine.start_matlab()
         self.matlabEngine.cd("matlabScripts")
         self.requests = queue.Queue(maxsize=10)
         self.finished = queue.Queue()
+        self.retValQueue = retValQueue
         self.exit = threading.Event()
         self.workers = set()
         self.thread = threading.Thread(target=self.startMatlabServer, name="MatlabExecutionThread")
@@ -34,7 +35,7 @@ class matlab_executioner:
                 return
             try:
                 request = self.requests.get_nowait()
-                self.workers.add(matlab_worker.matlabWorker(self.matlabEngine, request[0], request[1]))
+                self.workers.add(matlab_worker.matlabWorker(self.matlabEngine, request))
             except queue.Empty:
                 pass
             try:
@@ -46,13 +47,13 @@ class matlab_executioner:
 
             time.sleep(0.3)
 
-    def callTest(self, worker, args):
-        a = args[0]
-        b = args[1]
+    def callTest(self, worker, request):
+        a = request.args[0]
+        b = request.args[1]
         retVal = worker.matlabEngine.test(a, b)
         if worker.exit.is_set():
             return
-        print(f"Test Ouput: {retVal}")
+        self.retValQueue.put((request,retVal))
         finished = (worker)
         while True:
             try:
