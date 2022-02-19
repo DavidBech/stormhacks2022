@@ -65,11 +65,11 @@ class matlab_executioner:
                     return
                 time.sleep(worker.loopSleepTime)
 
-    def createBlankFigure(self, worker, args):
+    def createBlankFigure(self, worker, request):
         retVal = worker.matlabEngine.blankFigure()
         if worker.exit.is_set():
             return
-        print(retVal)
+        self.retValQueue.put((request,retVal))
         finished = (worker)
         while True:
             try:
@@ -80,12 +80,11 @@ class matlab_executioner:
                     return
                 time.sleep(worker.loopSleepTime)   
 
-    def callFourier(self, worker, args):
-        x = args 
-        retVal = worker.matlabEngine.foureirTransform_base(x)
+    def callFourier(self, worker, request):
+        retVal = worker.matlabEngine.fourierTransform_base()
         if worker.exit.is_set():
             return
-        print(retVal)
+        self.retValQueue.put((request,retVal))
         finished = (worker)
         while True:
             try:

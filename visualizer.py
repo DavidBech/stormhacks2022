@@ -10,25 +10,25 @@ Top Level Module
 if __name__ == "__main__":
     requestRetVals = queue.Queue()
     matlab_e = matlab_execution.matlab_executioner(requestRetVals)
-
     try:
         while True:
             try:
                 val = requestRetVals.get_nowait()
+                print("got item")
                 print(f"Return Value: {val}")
             except queue.Empty:
                 pass
 
-            print("Enter Value for a")
-            a = int(input())
-            print("Enter Value for b")
-            b = int(input())
-
-            request = matlab_request.request(matlab_e.callTest, (a,b))
-            print("Press Enter to create blank figure")
+            #print("Press Enter to create blank figure")
+            #input()
+            #request = matlab_request.request(matlab_e.createBlankFigure, None)
+            #matlab_e.requests.put(request)
+            print("before f transform")
             input()
-            request = (matlab_e.createBlankFigure, None)
+            request = matlab_request.request(matlab_e.callFourier, None)
             matlab_e.requests.put(request)
+            print("after f transform")
+            input()
             time.sleep(0.2)
 
     except KeyboardInterrupt:
