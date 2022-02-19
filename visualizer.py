@@ -4,6 +4,7 @@ import matlab_execution
 if __name__ == "__main__":
     figure_h = figure_handle.figure_handler()
     matlab_e = matlab_execution.matlab_executioner()
+    matlab_e.callTest()
     print("test")
     pass
 
