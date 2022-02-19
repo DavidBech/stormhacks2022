@@ -1,4 +1,5 @@
-function X = fourierTransform_base ()
+function fourierTransform_base ()
+    set(0, 'DefaultFigureVisible', 'off');
     SampleTime = 1/50;
     SampleFreq = 1/SampleTime;
     t = 0:SampleTime:10-SampleTime;
@@ -12,5 +13,6 @@ function X = fourierTransform_base ()
     axis([-5, 5, -1, 300])
     xlabel("Frequency (Hz)")
     ylabel("Magnitude")
+    saveas(gcf,"test.jpg")
     %plot(f, abs(X))
 end

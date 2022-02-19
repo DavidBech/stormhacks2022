@@ -81,7 +81,7 @@ class matlab_executioner:
                 time.sleep(worker.loopSleepTime)   
 
     def callFourier(self, worker, request):
-        retVal = worker.matlabEngine.fourierTransform_base()
+        retVal = worker.matlabEngine.fourierTransform_base(nargout=0)
         if worker.exit.is_set():
             return
         self.retValQueue.put((request,retVal))
