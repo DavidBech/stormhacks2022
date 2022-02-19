@@ -4,7 +4,10 @@ import matlab_execution
 Top Level Module 
 """
 if __name__ == "__main__":
-    figure_h = figure_handle.figure_handler()
     matlab_e = matlab_execution.matlab_executioner()
-    matlab_e.callFourier()
-    print("test")
+    open = True
+    while open:
+        input()
+        matlab_e.callFourier()
+
+    print("Exiting")

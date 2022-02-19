@@ -1,6 +1,10 @@
 import matlab
 import matlab.engine
 import io
+import threading
+import time
+import queue
+
 """
 Class For Handling matlab calls
 """
@@ -10,6 +14,14 @@ class matlab_executioner:
         self.matlabEngine.cd("matlabScripts")
         self.matlabOut = io.StringIO()
         self.matlabErr = io.StringIO()
+        self.requests = queue.Queue()
+        self.workers = []
+        self.thread = threading.Thread(target=self.startMatlabServer)
+
+    def startMatlabServer(self):
+        while True:
+            time.sleep(1000)
+            print("After Sleep")
 
     def getMLabStdout(self) -> str:
         return self.matlabOut.getvalue()
