@@ -2,7 +2,6 @@ from operator import truediv
 from typing import Set
 import matlab
 import matlab.engine
-import io
 import threading
 import time
 import queue
