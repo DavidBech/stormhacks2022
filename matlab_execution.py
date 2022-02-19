@@ -19,3 +19,6 @@ class matlab_executioner:
 
     def callTest(self):
         print(self.matlabEngine.test(2,3))
+    
+    def callFourier(self):
+        print(self.matlabEngine.fourierTransform_base(" "))
