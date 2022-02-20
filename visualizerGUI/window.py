@@ -9,17 +9,30 @@ import PIL.Image
 
 #sg.preview_all_look_and_feel_themes()
 sg.theme('BlueMono')   # Add a touch of color
+# WHAT ARE YOU FEEEEEEELING?
 
 # All the stuff inside your window.
-layout1 = [[sg.Image('juliaSet.png')],
+layoutFourier = [
+            [sg.Image('juliaSet.png')],
             [sg.Text('Enter value a'), sg.InputText()],
-            [sg.Text('Enter value b'), sg.InputText()],
-            [sg.Button('Ok'), sg.Button('Cancel')]]
+            [sg.Text('Enter value b'), sg.InputText()]
+        ]
 
-layout2 = [[sg.Image('juliaSet.png')],[sg.Button('Cancel')]]
+layoutJulia = [
+            [sg.Image('juliaSet.png')]
+        ]
 
-layout = [[sg.Column(layout1, key="lay0"), sg.Column(layout2, visible=False, key="lay1")], [sg.Button("Change Window")]]
-currentLayout=0
+layout = [
+            [
+                sg.Column(layoutFourier, key="layoutFourier"), 
+                sg.Column(layoutJulia, visible=False, key="layoutJulia")
+            ],
+            [sg.Button('Ok')],
+            [sg.Button("Change Window")],
+            [sg.Button('Cancel')]
+        ]
+
+currentLayout="layoutFourier"
 # Create the Window
 window = sg.Window("Visualizer", layout)
 
@@ -32,12 +45,14 @@ while True:
     if event == sg.WIN_CLOSED or event == 'Cancel': # if user closes window or clicks cancel
         break
     
+    # Switch mode between fourier and julia set
     if event == 'Change Window':
-        window[f"lay{currentLayout}"].update(visible=False)
-        currentLayout = 1 if currentLayout == 0 else 0
-        window[f"lay{currentLayout}"].update(visible=True)
+        window[f"{currentLayout}"].update(visible=False)
+        currentLayout = "layoutFourier" if currentLayout == "layoutJulia" else "layoutFourier"
+        window[f"{currentLayout}"].update(visible=True)
         window.refresh()
 
+    # attempt to get any return value from pervious matlab calls
     try:
         val = requestRetVals.get_nowait()
         print(f"Return Value: {val}")
@@ -46,7 +61,11 @@ while True:
     
     #Pass in arguments to request portal
     if event == "Ok":
-        request = matlab_request.request(matlab_e.callTest, (int(values[1]), int(values[2])))
+        if currentLayout == "layoutFourier":
+            request = matlab_request.request(matlab_e.callFourier, (int(values[1]), int(values[2])))
+        elif currentLayout == "layoutJulia":
+            request = matlab_request.request(matlab_e.callJulia, (int(values[1]), int(values[2])))
+            
         matlab_e.requests.put(request)
     
 window.close()
