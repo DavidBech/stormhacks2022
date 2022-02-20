@@ -1,5 +1,4 @@
 __pycache__
 *.asv
-test.jpg
-juliaSet.jpg
-fourierMag.jpg
+matlabScripts/juliaSet.png
+matlabScripts/fourierMag.png

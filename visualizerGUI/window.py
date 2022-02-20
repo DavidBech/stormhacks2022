@@ -23,7 +23,7 @@ layoutJulia = [
         ]
 
 layout = [
-            [sg.Image('juliaSet.png')],
+            [sg.Image('juliaSet.png', key="-IMAGE-")],
             [
                 sg.Column(layoutFourier, key="layoutFourier"), 
                 sg.Column(layoutJulia, visible=False, key="layoutJulia")
@@ -59,13 +59,10 @@ while True:
         print(f"Return Value: {val}")
         if currentLayout == "layoutFourier":
             if "fourier" in val[1]:
-                # TODO change the image
-                pass
-            pass
+                window["-IMAGE-"].update("..\matlabScripts\fourierMag.png")
         elif currentLayout == "layoutJulia":
             if "julia" in val[1]:
-                # TODO change the image
-                pass
+                window["-IMAGE-"].update("..\matlabScripts\juliaSet.png")
     except queue.Empty:
         pass
     
@@ -74,7 +71,7 @@ while True:
         if currentLayout == "layoutFourier":
             request = matlab_request.request(matlab_e.callFourier, (int(values[1]), int(values[2])))
         elif currentLayout == "layoutJulia":
-            request = matlab_request.request(matlab_e.callJulia, (25, 1000, float(values[3]), float(values[4])))
+            request = matlab_request.request(matlab_e.callJulia, (25, 1000, float(values[2]), float(values[3])))
             
         matlab_e.requests.put(request)
     
