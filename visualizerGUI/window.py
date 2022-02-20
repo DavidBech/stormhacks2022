@@ -14,8 +14,8 @@ sg.theme('BlueMono')   # Add a touch of color
 
 # All the stuff inside your window.
 layoutFourier = [
-            [sg.Text('Fast Fourier Transform')],
-            [sg.Text('Enter function of t'), sg.InputText(key='fourierInputCount')]
+            [sg.Text('Fast Fourier Transform', font="TimesNewRoman 16")],
+            [sg.Text('Enter function of t', font="TimesNewRoman 16"), sg.InputText(key='fourierInputCount')]
         ]
 
 layoutJulia = [
