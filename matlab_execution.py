@@ -67,11 +67,10 @@ class matlab_executioner:
 
     def callFourier(self, worker, request):
         func = "@(t)" + request.args #+ "\""
-        print(func)
-        retVal = worker.matlabEngine.fourierTransform_base(func, nargout=0)
+        worker.matlabEngine.fourierTransform_base(func, nargout=0)
         if worker.exit.is_set():
             return
-        self.retValQueue.put((request,retVal))
+        self.retValQueue.put((request,"fourier"))
         finished = (worker)
         while True:
             try:
@@ -83,10 +82,10 @@ class matlab_executioner:
                 time.sleep(worker.loopSleepTime)
 
     def callJulia(self, worker, request):
-        retVal = worker.matlabEngine.julia(request.args[0], request.args[1], request.args[2], request.args[3], nargout=0)
+        worker.matlabEngine.julia(request.args[0], request.args[1], request.args[2], request.args[3], nargout=0)
         if worker.exit.is_set():
             return
-        self.retValQueue.put((request,retVal))
+        self.retValQueue.put((request,"julia"))
         finished = (worker)
         while True:
             try:

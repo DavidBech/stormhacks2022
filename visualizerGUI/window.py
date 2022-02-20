@@ -13,18 +13,17 @@ sg.theme('BlueMono')   # Add a touch of color
 
 # All the stuff inside your window.
 layoutFourier = [
-            [sg.Image('juliaSet.png')],
             [sg.Text('Enter value a'), sg.InputText()],
             [sg.Text('Enter value b'), sg.InputText()]
         ]
 
 layoutJulia = [
-            [sg.Image('juliaSet.png')],
             [sg.Text('Real c value'), sg.InputText()],
             [sg.Text('Complex c value'), sg.InputText()]
         ]
 
 layout = [
+            [sg.Image('juliaSet.png')],
             [
                 sg.Column(layoutFourier, key="layoutFourier"), 
                 sg.Column(layoutJulia, visible=False, key="layoutJulia")
@@ -53,12 +52,20 @@ while True:
         currentLayout = "layoutFourier" if currentLayout == "layoutJulia" else "layoutJulia"
         window[f"{currentLayout}"].update(visible=True)
         window.refresh()
-        print("refreshed")
 
     # attempt to get any return value from pervious matlab calls
     try:
         val = requestRetVals.get_nowait()
         print(f"Return Value: {val}")
+        if currentLayout == "layoutFourier":
+            if "fourier" in val[1]:
+                # TODO change the image
+                pass
+            pass
+        elif currentLayout == "layoutJulia":
+            if "julia" in val[1]:
+                # TODO change the image
+                pass
     except queue.Empty:
         pass
     
@@ -67,7 +74,7 @@ while True:
         if currentLayout == "layoutFourier":
             request = matlab_request.request(matlab_e.callFourier, (int(values[1]), int(values[2])))
         elif currentLayout == "layoutJulia":
-            request = matlab_request.request(matlab_e.callJulia, (25, 1000, float(values[4]), float(values[5])))
+            request = matlab_request.request(matlab_e.callJulia, (25, 1000, float(values[3]), float(values[4])))
             
         matlab_e.requests.put(request)
     
