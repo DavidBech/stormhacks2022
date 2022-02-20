@@ -32,7 +32,7 @@ layout = [
 
 currentLayout="layoutFourier"
 # Create the Window
-window = sg.Window("Visualizer", layout)
+window = sg.Window("Corollary", layout)
 
 requestRetVals = queue.Queue()
 matlab_e = matlab_execution.matlab_executioner(requestRetVals, window)
