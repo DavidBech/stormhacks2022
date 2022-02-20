@@ -40,7 +40,7 @@ currentLayout="layoutFourier"
 window = sg.Window("Visualizer", layout)
 
 requestRetVals = queue.Queue()
-matlab_e = matlab_execution.matlab_executioner(requestRetVals)
+matlab_e = matlab_execution.matlab_executioner(requestRetVals, window)
 # Event Loop to process "events" and get the "values" of the inputs
 while True:
     

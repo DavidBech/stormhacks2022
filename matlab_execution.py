@@ -11,12 +11,13 @@ import matlab_worker
 Class For Handling matlab calls
 """
 class matlab_executioner:
-    def __init__(self, retValQueue):
+    def __init__(self, retValQueue, window):
         self.matlabEngine = matlab.engine.start_matlab()
         self.matlabEngine.cd("..\matlabScripts")
         self.requests = queue.Queue(maxsize=10)
         self.finished = queue.Queue()
         self.retValQueue = retValQueue
+        self.window = window
         self.exit = threading.Event()
         self.workers = set()
         self.loopSleepTime = 0.3
@@ -71,6 +72,7 @@ class matlab_executioner:
         if worker.exit.is_set():
             return
         self.retValQueue.put((request,"fourier"))
+        self.window.write_event_value('-THREAD-', 1)
         finished = (worker)
         while True:
             try:
@@ -86,6 +88,7 @@ class matlab_executioner:
         if worker.exit.is_set():
             return
         self.retValQueue.put((request,"julia"))
+        self.window.write_event_value('-THREAD-', 1)
         finished = (worker)
         while True:
             try:
