@@ -19,8 +19,8 @@ layoutFourier = [
         ]
 
 layoutJulia = [
-            [sg.Text('Julia Set: '), sg.Image('juliaSetFormula.png')],
-            [sg.Text("Slide to select a value for 'a'"), sg.Slider(range=(0,6.2), default_value=3.14, resolution=.1, size=(40,15), orientation='horizontal', key='juliaInputCount')],
+            [sg.Text('Julia Set: ', font="TimesNewRoman 16"), sg.Image('juliaSetFormula.png')],
+            [sg.Text("Slide to select a value for 'a'", font="TimesNewRoman 16"), sg.Slider(range=(0,6.2), default_value=3.14, resolution=.1, size=(40,15), orientation='horizontal', key='juliaInputCount', font="TimesNewRoman")],
             #[sg.Slider(range=(0,6.2), default_value=3.14, resolution=.1, size=(40,15), orientation='horizontal')]
         ]
 
