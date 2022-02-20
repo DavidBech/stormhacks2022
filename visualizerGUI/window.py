@@ -15,7 +15,7 @@ sg.theme('BlueMono')   # Add a touch of color
 # All the stuff inside your window.
 layoutFourier = [
             [sg.Text('Fast Fourier Transform')],
-            [sg.Text('Enter function of t'), sg.InputText()]
+            [sg.Text('Enter function of t'), sg.InputText(key='fourierInputCount')]
         ]
 
 layoutJulia = [
@@ -56,10 +56,9 @@ while True:
     # attempt to get any return value from pervious matlab calls
     try:
         val = requestRetVals.get_nowait()
-        # print(f"Return Value: {val}")
         if currentLayout == "layoutFourier":
             if "fourier" in val[1]:
-                window["-IMAGE-"].update("..\matlabScripts\fourierMag.png")
+                window["-IMAGE-"].update("..\matlabScripts\\fourierMag.png")
         elif currentLayout == "layoutJulia":
             if "julia" in val[1]:
                 window["-IMAGE-"].update("..\matlabScripts\juliaSet.png")
@@ -69,7 +68,7 @@ while True:
     #Pass in arguments to request portal
     if event == "Ok":
         if currentLayout == "layoutFourier":
-            request = matlab_request.request(matlab_e.callFourier, values[2])
+            request = matlab_request.request(matlab_e.callFourier, values['fourierInputCount'])
         elif currentLayout == "layoutJulia":
             #real = cos(c) and complex = sin(c); multiply both real and complex values by 0.7885
             real = 0.7885*math.cos(float(values['juliaInputCount']))
