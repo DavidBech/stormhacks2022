@@ -13,7 +13,7 @@ Class For Handling matlab calls
 class matlab_executioner:
     def __init__(self, retValQueue):
         self.matlabEngine = matlab.engine.start_matlab()
-        self.matlabEngine.cd("matlabScripts")
+        self.matlabEngine.cd("../matlabScripts")
         self.requests = queue.Queue(maxsize=10)
         self.finished = queue.Queue()
         self.retValQueue = retValQueue
