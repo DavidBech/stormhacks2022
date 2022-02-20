@@ -1,4 +1,5 @@
 function fourierTransform_base (funcIn)
+    %https://www.mathworks.com/help/matlab/math/fourier-transforms.html
     set(0, 'DefaultFigureVisible', 'off');
     SampleTime = 1/50;
     SampleFreq = 1/SampleTime;
