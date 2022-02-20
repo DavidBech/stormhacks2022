@@ -19,16 +19,9 @@ if __name__ == "__main__":
             except queue.Empty:
                 pass
 
-            #print("Press Enter to create blank figure")
-            #input()
-            #request = matlab_request.request(matlab_e.createBlankFigure, None)
-            #matlab_e.requests.put(request)
-            print("before f transform")
-            input()
-            func = "cos(2*pi*2*t)"
-            request = matlab_request.request(matlab_e.callFourier, (func))
+            request = matlab_request.request(matlab_e.callJulia, (25, 1000, -0.8, 0.158))
             matlab_e.requests.put(request)
-            print("after f transform")
+            print("after julia")
             input()
             time.sleep(0.2)
 

@@ -21,6 +21,6 @@ function fourierTransform_base (funcIn)
     axis([-5, 5, -1, 300])
     xlabel("Frequency (Hz)")
     ylabel("Magnitude")
-    saveas(gcf,"fourierMag.jpg")
+    saveas(gcf,"fourierMag.png")
     %plot(f, abs(X))
 end
