@@ -19,7 +19,9 @@ layoutFourier = [
         ]
 
 layoutJulia = [
-            [sg.Image('juliaSet.png')]
+            [sg.Image('juliaSet.png')],
+            [sg.Text('Real c value'), sg.InputText()],
+            [sg.Text('Complex c value'), sg.InputText()]
         ]
 
 layout = [
@@ -64,7 +66,7 @@ while True:
         if currentLayout == "layoutFourier":
             request = matlab_request.request(matlab_e.callFourier, (int(values[1]), int(values[2])))
         elif currentLayout == "layoutJulia":
-            request = matlab_request.request(matlab_e.callJulia, (int(values[1]), int(values[2])))
+            request = matlab_request.request(matlab_e.callJulia, (25, 1000, float(values[1]), float(values[2])))
             
         matlab_e.requests.put(request)
     
