@@ -38,5 +38,5 @@ colormap colorcube(256)
 pcolor(t);
 shading flat;
 axis('square','equal','off');
-saveas(gcf,"juliaSet.jpg")
+saveas(gcf,"juliaSet.png")
 
