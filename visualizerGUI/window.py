@@ -2,13 +2,11 @@ import PySimpleGUI as sg
 import sys
 sys.path.insert(1, '..')
 import matlab_execution
-import figure_handle
 import matlab_request
 import queue
 import PIL.Image
 import math
 
-#sg.preview_all_look_and_feel_themes()
 sg.theme('BlueMono')   # Add a touch of color
 # WHAT ARE WE FEEEEEEELING?
 
@@ -21,7 +19,6 @@ layoutFourier = [
 layoutJulia = [
             [sg.Text('Julia Set: ', font="TimesNewRoman 16"), sg.Image('juliaSetFormula.png')],
             [sg.Text("Slide to select a value for 'a'", font="TimesNewRoman 16"), sg.Slider(range=(0,6.2), default_value=3.14, resolution=.1, size=(40,15), orientation='horizontal', key='juliaInputCount', font="TimesNewRoman")],
-            #[sg.Slider(range=(0,6.2), default_value=3.14, resolution=.1, size=(40,15), orientation='horizontal')]
         ]
 
 layout = [

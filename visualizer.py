@@ -1,11 +1,10 @@
-import figure_handle
 import matlab_execution
 import time
 import queue
 import matlab_request
 
 """
-Top Level Module 
+Top Level Command Line Module 
 """
 if __name__ == "__main__":
     requestRetVals = queue.Queue()
