@@ -19,9 +19,9 @@ layoutFourier = [
         ]
 
 layoutJulia = [
-            [sg.Text('Julia Set')],
-            [sg.Text("Slide to select a value for 'a'")],
-            [sg.Slider(range=(0,6.2), default_value=3.14, resolution=.1, size=(40,15), orientation='horizontal')]
+            [sg.Text('Julia Set: '), sg.Image('juliaSetFormula.png')],
+            [sg.Text("Slide to select a value for 'a'"), sg.Slider(range=(0,6.2), default_value=3.14, resolution=.1, size=(40,15), orientation='horizontal', key='juliaInputCount')],
+            #[sg.Slider(range=(0,6.2), default_value=3.14, resolution=.1, size=(40,15), orientation='horizontal')]
         ]
 
 layout = [
@@ -30,9 +30,7 @@ layout = [
                 sg.Column(layoutFourier, key="layoutFourier"), 
                 sg.Column(layoutJulia, visible=False, key="layoutJulia")
             ],
-            [sg.Button('Ok')],
-            [sg.Button("Change Window")],
-            [sg.Button('Cancel')]
+            [sg.Button('Ok'), sg.Button("Change Window"), sg.Button('Cancel')]
         ]
 
 currentLayout="layoutFourier"
@@ -74,8 +72,8 @@ while True:
             request = matlab_request.request(matlab_e.callFourier, values[2])
         elif currentLayout == "layoutJulia":
             #real = cos(c) and complex = sin(c); multiply both real and complex values by 0.7885
-            real = 0.7885*math.cos(float(values[1]))
-            complex = 0.7885*math.sin(float(values[1]))
+            real = 0.7885*math.cos(float(values['juliaInputCount']))
+            complex = 0.7885*math.sin(float(values['juliaInputCount']))
             request = matlab_request.request(matlab_e.callJulia, (25, 1000, real, complex))
             
         matlab_e.requests.put(request)
