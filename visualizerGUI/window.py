@@ -9,15 +9,16 @@ import PIL.Image
 
 #sg.preview_all_look_and_feel_themes()
 sg.theme('BlueMono')   # Add a touch of color
-# WHAT ARE YOU FEEEEEEELING?
+# WHAT ARE WE FEEEEEEELING?
 
 # All the stuff inside your window.
 layoutFourier = [
-            [sg.Text('Enter value a'), sg.InputText()],
-            [sg.Text('Enter value b'), sg.InputText()]
+            [sg.Text('Fast Fourier Transform')],
+            [sg.Text('Enter function of t'), sg.InputText()]
         ]
 
 layoutJulia = [
+            [sg.Text('Julia Set')],
             [sg.Text('Real c value'), sg.InputText()],
             [sg.Text('Complex c value'), sg.InputText()]
         ]
@@ -69,9 +70,9 @@ while True:
     #Pass in arguments to request portal
     if event == "Ok":
         if currentLayout == "layoutFourier":
-            request = matlab_request.request(matlab_e.callFourier, (int(values[1]), int(values[2])))
+            request = matlab_request.request(matlab_e.callFourier, values[2])
         elif currentLayout == "layoutJulia":
-            request = matlab_request.request(matlab_e.callJulia, (25, 1000, float(values[2]), float(values[3])))
+            request = matlab_request.request(matlab_e.callJulia, (25, 1000, float(values[4]), float(values[5])))
             
         matlab_e.requests.put(request)
     
