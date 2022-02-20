@@ -5,16 +5,19 @@ import matlab_execution
 import figure_handle
 import matlab_request
 import queue
+import PIL.Image
 
 #sg.preview_all_look_and_feel_themes()
 sg.theme('BlueMono')   # Add a touch of color
+
 # All the stuff inside your window.
-layout = [  [sg.Text('Enter value a'), sg.InputText()],
+layout = [  [sg.Image('juliaSet.png')],
+            [sg.Text('Enter value a'), sg.InputText()],
             [sg.Text('Enter value b'), sg.InputText()],
             [sg.Button('Ok'), sg.Button('Cancel')] ]
 
 # Create the Window
-window = sg.Window('Window Title', layout)
+window = sg.Window("Visualizer", layout)
 
 requestRetVals = queue.Queue()
 matlab_e = matlab_execution.matlab_executioner(requestRetVals)
@@ -30,9 +33,9 @@ while True:
         print(f"Return Value: {val}")
     except queue.Empty:
         pass
-
+    
     #Pass in arguments to request portal
-    request = matlab_request.request(matlab_e.callTest, (int(values[0]), int(values[1])))
+    request = matlab_request.request(matlab_e.callTest, (int(values[1]), int(values[2])))
     matlab_e.requests.put(request)
     
 window.close()
