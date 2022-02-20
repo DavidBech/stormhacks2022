@@ -6,6 +6,7 @@ import figure_handle
 import matlab_request
 import queue
 import PIL.Image
+import math
 
 #sg.preview_all_look_and_feel_themes()
 sg.theme('BlueMono')   # Add a touch of color
@@ -19,8 +20,8 @@ layoutFourier = [
 
 layoutJulia = [
             [sg.Text('Julia Set')],
-            [sg.Text('Real c value'), sg.InputText()],
-            [sg.Text('Complex c value'), sg.InputText()]
+            [sg.Text("Slide to select a value for 'a'")],
+            [sg.Slider(range=(0,6.2), default_value=3.14, resolution=.1, size=(40,15), orientation='horizontal')]
         ]
 
 layout = [
@@ -57,7 +58,7 @@ while True:
     # attempt to get any return value from pervious matlab calls
     try:
         val = requestRetVals.get_nowait()
-        print(f"Return Value: {val}")
+        # print(f"Return Value: {val}")
         if currentLayout == "layoutFourier":
             if "fourier" in val[1]:
                 window["-IMAGE-"].update("..\matlabScripts\fourierMag.png")
@@ -72,7 +73,10 @@ while True:
         if currentLayout == "layoutFourier":
             request = matlab_request.request(matlab_e.callFourier, values[2])
         elif currentLayout == "layoutJulia":
-            request = matlab_request.request(matlab_e.callJulia, (25, 1000, float(values[4]), float(values[5])))
+            #real = cos(c) and complex = sin(c); multiply both real and complex values by 0.7885
+            real = 0.7885*math.cos(float(values[1]))
+            complex = 0.7885*math.sin(float(values[1]))
+            request = matlab_request.request(matlab_e.callJulia, (25, 1000, real, complex))
             
         matlab_e.requests.put(request)
     
