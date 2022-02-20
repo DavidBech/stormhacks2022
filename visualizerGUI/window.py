@@ -50,9 +50,10 @@ while True:
     # Switch mode between fourier and julia set
     if event == 'Change Window':
         window[f"{currentLayout}"].update(visible=False)
-        currentLayout = "layoutFourier" if currentLayout == "layoutJulia" else "layoutFourier"
+        currentLayout = "layoutFourier" if currentLayout == "layoutJulia" else "layoutJulia"
         window[f"{currentLayout}"].update(visible=True)
         window.refresh()
+        print("refreshed")
 
     # attempt to get any return value from pervious matlab calls
     try:
@@ -66,7 +67,7 @@ while True:
         if currentLayout == "layoutFourier":
             request = matlab_request.request(matlab_e.callFourier, (int(values[1]), int(values[2])))
         elif currentLayout == "layoutJulia":
-            request = matlab_request.request(matlab_e.callJulia, (25, 1000, float(values[1]), float(values[2])))
+            request = matlab_request.request(matlab_e.callJulia, (25, 1000, float(values[4]), float(values[5])))
             
         matlab_e.requests.put(request)
     
