@@ -19,6 +19,7 @@ class matlab_executioner:
         self.retValQueue = retValQueue
         self.exit = threading.Event()
         self.workers = set()
+        self.loopSleepTime = 0.3
         self.thread = threading.Thread(target=self.startMatlabServer, name="MatlabExecutionThread")
         self.thread.start()
     
@@ -45,7 +46,7 @@ class matlab_executioner:
             except queue.Empty:
                 pass
 
-            time.sleep(0.3)
+            time.sleep(self.loopSleepTime)
 
     def callTest(self, worker, request):
         a = request.args[0]
@@ -62,7 +63,22 @@ class matlab_executioner:
             except queue.Full:
                 if worker.exit.is_set():
                     return
-                time.sleep(0.3)
-    
-    def callFourier(self, engine):
-        print(engine.fourierTransform_base(" "))
+                time.sleep(worker.loopSleepTime)
+
+    def callFourier(self, worker, request):
+        func = "@(t)" + request.args #+ "\""
+        print(func)
+        retVal = worker.matlabEngine.fourierTransform_base(func, nargout=0)
+        if worker.exit.is_set():
+            return
+        self.retValQueue.put((request,retVal))
+        finished = (worker)
+        while True:
+            try:
+                self.finished.put(finished, block=True, timeout=1)
+                return
+            except queue.Full:
+                if worker.exit.is_set():
+                    return
+                time.sleep(worker.loopSleepTime)
+
